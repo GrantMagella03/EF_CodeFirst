@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_CodeFirst.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    [Migration("20230828183528_created Orderline class")]
-    partial class createdOrderlineclass
+    [Migration("20230828195246_added orderlines and classes")]
+    partial class addedorderlinesandclasses
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,7 @@ namespace EF_CodeFirst.Migrations
                         .IsRequired();
 
                     b.HasOne("EF_CodeFirst.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderLines")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -177,6 +177,11 @@ namespace EF_CodeFirst.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("EF_CodeFirst.Models.Order", b =>
+                {
+                    b.Navigation("OrderLines");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,11 +5,27 @@
 namespace EF_CodeFirst.Migrations
 {
     /// <inheritdoc />
-    public partial class createdOrderlineclass : Migration
+    public partial class addedorderlinesandclasses : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UPD = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(11,2)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "orderLines",
                 columns: table => new
@@ -28,14 +44,20 @@ namespace EF_CodeFirst.Migrations
                         column: x => x.ItemID,
                         principalTable: "Items",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_orderLines_Orders_OrderID",
                         column: x => x.OrderID,
                         principalTable: "Orders",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_UPD",
+                table: "Items",
+                column: "UPD",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_orderLines_ItemID",
@@ -53,6 +75,9 @@ namespace EF_CodeFirst.Migrations
         {
             migrationBuilder.DropTable(
                 name: "orderLines");
+
+            migrationBuilder.DropTable(
+                name: "Items");
         }
     }
 }
