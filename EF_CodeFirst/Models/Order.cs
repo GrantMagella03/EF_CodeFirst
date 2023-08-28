@@ -17,6 +17,8 @@ namespace EF_CodeFirst.Models {
         public int CustomerID { get; set; }//Foreign Key
         public virtual Customer? Customer { get; set; } = null;//needed for FK
 
+        public virtual ICollection<OrderLine> OrderLines { get; set; }
+
 
     }
 }
