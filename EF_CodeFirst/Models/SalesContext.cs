@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace EF_CodeFirst.Models {
     public class SalesContext : DbContext {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; } 
         public SalesContext() : base() {}
         public SalesContext(DbContextOptions<SalesContext> options) : base(options) {}
 
